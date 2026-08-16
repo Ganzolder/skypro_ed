@@ -1,4 +1,4 @@
-/* M23 soldier visual override — stable sprite + safe walk animation */
+/* M23 soldier visual override — real 4-frame walk animation, safe bounds */
 .pixel-soldier {
   width: 54px !important;
   height: 78px !important;
@@ -18,40 +18,52 @@
   width: 34px;
   height: 50px;
 }
+
+/* The parent .camp-person keeps the original patrol path animation.
+   Only this inner 32x48 viewport swaps frames. */
 .runner-sprite {
   position: absolute !important;
   top: 1px !important;
   left: 1px !important;
   width: 32px !important;
   height: 48px !important;
-  background: center / contain no-repeat url("/assets/soldier-32x48.png") !important;
+  background-image: url("/assets/soldier-walk-4dir-32x48.png") !important;
+  background-repeat: no-repeat !important;
+  background-size: 128px 192px !important;
+  background-position-x: 0;
+  background-position-y: 0;
   box-shadow: none !important;
   image-rendering: pixelated !important;
-  transform-origin: 50% 100% !important;
-  will-change: transform;
-  animation: soldier-safe-walk .38s steps(2, end) infinite !important;
+  animation: soldier-frame-walk .44s linear infinite !important;
 }
+
 .runner-sprite::before,
 .runner-sprite::after,
 .runner-sprite > b {
   display: none !important;
 }
 
-/* The parent .camp-person keeps the original patrol route animation.
-   Only the inner sprite moves here, so the camp/map layer is never touched. */
-@keyframes soldier-safe-walk {
-  0%   { transform: translate3d(0, 0, 0) rotate(-1deg) scaleY(1); }
-  25%  { transform: translate3d(0, -2px, 0) rotate(0deg) scaleY(.98); }
-  50%  { transform: translate3d(0, 0, 0) rotate(1deg) scaleY(1); }
-  75%  { transform: translate3d(0, -1px, 0) rotate(0deg) scaleY(.985); }
-  100% { transform: translate3d(0, 0, 0) rotate(-1deg) scaleY(1); }
+/* Fixed facing rows per patrol family. The frame animation itself is shared. */
+.camp-person.route-1 .runner-sprite { background-position-y: 0 !important; }       /* right */
+.camp-person.route-2 .runner-sprite { background-position-y: -144px !important; } /* down */
+.camp-person.route-3 .runner-sprite { background-position-y: -96px !important; }  /* left */
+.camp-person.route-4 .runner-sprite { background-position-y: -48px !important; }  /* up */
+.camp-person.route-5 .runner-sprite { background-position-y: 0 !important; }       /* right */
+
+/* Explicit frame positions: never move beyond the fourth 32px frame. */
+@keyframes soldier-frame-walk {
+  0%, 24.99%   { background-position-x: 0; }
+  25%, 49.99%  { background-position-x: -32px; }
+  50%, 74.99%  { background-position-x: -64px; }
+  75%, 100%    { background-position-x: -96px; }
 }
 
-/* Static states should not look like they are walking. */
+/* Static states should not walk in place. */
 .camp-person.recovering .runner-sprite,
 .camp-person.inPit .runner-sprite {
   animation: none !important;
-  transform: none !important;
+  background-position-x: 0 !important;
+  background-position-y: -144px !important;
 }
 
 .camp-person.commander .runner-sprite {
