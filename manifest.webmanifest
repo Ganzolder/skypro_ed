@@ -1,0 +1,9 @@
+{
+  "name": "M23",
+  "short_name": "M23",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#15170f",
+  "theme_color": "#75633f"
+}
