@@ -1,4 +1,4 @@
-/* M23 soldier visual override — uploaded pixel soldier */
+/* M23 soldier visual override — animated 4-direction pixel soldier */
 .pixel-soldier {
   width: 54px !important;
   height: 78px !important;
@@ -18,20 +18,89 @@
   width: 34px;
   height: 50px;
 }
+
 .runner-sprite {
   position: absolute !important;
   top: 1px !important;
   left: 1px !important;
   width: 32px !important;
   height: 48px !important;
-  background: center / contain no-repeat url("/assets/soldier-32x48.png") !important;
+  background-image: url("/assets/soldier-walk-4dir-32x48.png") !important;
+  background-repeat: no-repeat !important;
+  background-size: 128px 192px !important;
+  background-position-x: 0;
+  background-position-y: 0;
   box-shadow: none !important;
   image-rendering: pixelated !important;
+  animation: soldier-walk-frames .48s steps(4, end) infinite;
 }
+
 .runner-sprite::before,
 .runner-sprite::after,
 .runner-sprite > b {
   display: none !important;
+}
+
+/* Route-aware facing: RIGHT row 0, UP row 1, LEFT row 2, DOWN row 3. */
+.camp-person.route-1 .runner-sprite {
+  animation: soldier-walk-frames .48s steps(4, end) infinite, soldier-facing-r1 var(--duration) steps(1, end) infinite;
+  animation-delay: 0s, var(--delay);
+}
+.camp-person.route-2 .runner-sprite {
+  animation: soldier-walk-frames .48s steps(4, end) infinite, soldier-facing-r2 var(--duration) steps(1, end) infinite;
+  animation-delay: 0s, var(--delay);
+}
+.camp-person.route-3 .runner-sprite {
+  animation: soldier-walk-frames .48s steps(4, end) infinite, soldier-facing-r3 var(--duration) steps(1, end) infinite;
+  animation-delay: 0s, var(--delay);
+}
+.camp-person.route-4 .runner-sprite {
+  animation: soldier-walk-frames .48s steps(4, end) infinite, soldier-facing-r4 var(--duration) steps(1, end) infinite;
+  animation-delay: 0s, var(--delay);
+}
+.camp-person.route-5 .runner-sprite {
+  animation: soldier-walk-frames .48s steps(4, end) infinite, soldier-facing-r5 var(--duration) steps(1, end) infinite;
+  animation-delay: 0s, var(--delay);
+}
+
+.camp-person.onFront .runner-sprite {
+  background-position-y: 0 !important;
+  animation: soldier-walk-frames .42s steps(4, end) infinite !important;
+}
+.camp-person.recovering .runner-sprite,
+.camp-person.inPit .runner-sprite {
+  background-position: 0 -144px !important;
+  animation: none !important;
+}
+
+@keyframes soldier-walk-frames {
+  from { background-position-x: 0; }
+  to { background-position-x: -128px; }
+}
+
+@keyframes soldier-facing-r1 {
+  0%, 47% { background-position-y: 0; }
+  48%, 74% { background-position-y: -144px; }
+  75%, 100% { background-position-y: -96px; }
+}
+@keyframes soldier-facing-r2 {
+  0%, 33% { background-position-y: 0; }
+  34%, 66% { background-position-y: -96px; }
+  67%, 100% { background-position-y: -48px; }
+}
+@keyframes soldier-facing-r3 {
+  0%, 38% { background-position-y: -96px; }
+  39%, 72% { background-position-y: 0; }
+  73%, 100% { background-position-y: -48px; }
+}
+@keyframes soldier-facing-r4 {
+  0%, 46% { background-position-y: 0; }
+  47%, 100% { background-position-y: -96px; }
+}
+@keyframes soldier-facing-r5 {
+  0%, 30% { background-position-y: 0; }
+  31%, 64% { background-position-y: -96px; }
+  65%, 100% { background-position-y: -144px; }
 }
 
 .camp-person.commander .runner-sprite {

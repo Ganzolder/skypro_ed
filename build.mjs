@@ -25,4 +25,5 @@ fs.copyFileSync('manifest.webmanifest', path.join('dist', 'manifest.webmanifest'
 fs.copyFileSync('sprite-overrides.css', path.join('dist', 'sprite-overrides.css'));
 fs.copyFileSync(path.join('assets', 'soldier-card.png'), path.join('dist', 'assets', 'soldier-card.png'));
 fs.copyFileSync(path.join('assets', 'soldier-32x48.png'), path.join('dist', 'assets', 'soldier-32x48.png'));
-console.log(`Built M23 v22 web: ${Buffer.byteLength(html)} bytes from ${chunks.length} chunks + soldier sprite assets`);
+fs.copyFileSync(path.join('assets', 'soldier-walk-4dir-32x48.png'), path.join('dist', 'assets', 'soldier-walk-4dir-32x48.png'));
+console.log(`Built M23 v22 web: ${Buffer.byteLength(html)} bytes from ${chunks.length} chunks + animated soldier sprite assets`);
