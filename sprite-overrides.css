@@ -1,0 +1,54 @@
+/* M23 soldier visual override — uploaded pixel soldier */
+.pixel-soldier {
+  width: 54px !important;
+  height: 78px !important;
+  margin-top: 0 !important;
+  background: center / contain no-repeat url("/assets/soldier-card.png") !important;
+  image-rendering: pixelated !important;
+  filter: drop-shadow(8px 9px 0 rgba(31, 23, 14, .28)) !important;
+  transform: none !important;
+}
+.pixel-soldier::before,
+.pixel-soldier::after,
+.pixel-soldier > i {
+  display: none !important;
+}
+
+.camp-person {
+  width: 34px;
+  height: 50px;
+}
+.runner-sprite {
+  position: absolute !important;
+  top: 1px !important;
+  left: 1px !important;
+  width: 32px !important;
+  height: 48px !important;
+  background: center / contain no-repeat url("/assets/soldier-32x48.png") !important;
+  box-shadow: none !important;
+  image-rendering: pixelated !important;
+}
+.runner-sprite::before,
+.runner-sprite::after,
+.runner-sprite > b {
+  display: none !important;
+}
+
+.camp-person.commander .runner-sprite {
+  filter: brightness(1.08) saturate(.9) drop-shadow(0 0 2px rgba(245, 201, 104, .45)) !important;
+}
+.camp-person.is-selected .runner-sprite {
+  filter: drop-shadow(0 0 6px rgba(212, 154, 69, .85)) !important;
+}
+.camp-person.is-blogger .runner-sprite {
+  filter: drop-shadow(0 0 5px rgba(205, 84, 49, .9)) !important;
+}
+.camp-person.is-bribed-blogger .runner-sprite {
+  filter: drop-shadow(0 0 5px rgba(137, 167, 108, .95)) !important;
+}
+.camp-person.phone-muted .runner-sprite {
+  filter: grayscale(.55) brightness(.9) !important;
+}
+.runner-tag {
+  bottom: -13px !important;
+}
