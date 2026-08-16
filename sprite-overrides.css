@@ -1,4 +1,4 @@
-/* M23 soldier visual override — uploaded pixel soldier */
+/* M23 soldier visual override — stable sprite + safe walk animation */
 .pixel-soldier {
   width: 54px !important;
   height: 78px !important;
@@ -27,11 +27,31 @@
   background: center / contain no-repeat url("/assets/soldier-32x48.png") !important;
   box-shadow: none !important;
   image-rendering: pixelated !important;
+  transform-origin: 50% 100% !important;
+  will-change: transform;
+  animation: soldier-safe-walk .38s steps(2, end) infinite !important;
 }
 .runner-sprite::before,
 .runner-sprite::after,
 .runner-sprite > b {
   display: none !important;
+}
+
+/* The parent .camp-person keeps the original patrol route animation.
+   Only the inner sprite moves here, so the camp/map layer is never touched. */
+@keyframes soldier-safe-walk {
+  0%   { transform: translate3d(0, 0, 0) rotate(-1deg) scaleY(1); }
+  25%  { transform: translate3d(0, -2px, 0) rotate(0deg) scaleY(.98); }
+  50%  { transform: translate3d(0, 0, 0) rotate(1deg) scaleY(1); }
+  75%  { transform: translate3d(0, -1px, 0) rotate(0deg) scaleY(.985); }
+  100% { transform: translate3d(0, 0, 0) rotate(-1deg) scaleY(1); }
+}
+
+/* Static states should not look like they are walking. */
+.camp-person.recovering .runner-sprite,
+.camp-person.inPit .runner-sprite {
+  animation: none !important;
+  transform: none !important;
 }
 
 .camp-person.commander .runner-sprite {
