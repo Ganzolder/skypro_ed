@@ -3,7 +3,7 @@
   width: 54px !important;
   height: 78px !important;
   margin-top: 0 !important;
-  background: center / contain no-repeat url("/assets/soldier-card-v5.png") !important;
+  background: center / contain no-repeat url("/assets/soldier-card-v6.png") !important;
   image-rendering: pixelated !important;
   filter: drop-shadow(8px 9px 0 rgba(31, 23, 14, .28)) !important;
   transform: none !important;
@@ -25,15 +25,15 @@
   width: 32px !important;
   height: 48px !important;
   background-color: transparent !important;
-  background-image: url("/assets/soldier-walk-4dir-32x48-v5.png") !important;
+  background-image: url("/assets/soldier-walk-4dir-6f-32x48-v6.png") !important;
   background-repeat: no-repeat !important;
-  background-size: 128px 192px !important;
+  background-size: 192px 192px !important;
   background-position-x: 0;
   background-position-y: 0;
   box-shadow: none !important;
   image-rendering: pixelated !important;
   will-change: background-position, transform;
-  animation: soldier-walk-cycle 560ms linear infinite;
+  animation: soldier-walk-cycle 720ms linear infinite;
 }
 .runner-sprite::before,
 .runner-sprite::after,
@@ -42,16 +42,16 @@
 }
 
 .camp-person[data-facing="down"] .runner-sprite {
-  background-position-y: 0;
-}
-.camp-person[data-facing="right"] .runner-sprite {
-  background-position-y: -48px;
-}
-.camp-person[data-facing="left"] .runner-sprite {
   background-position-y: -96px;
 }
-.camp-person[data-facing="up"] .runner-sprite {
+.camp-person[data-facing="right"] .runner-sprite {
+  background-position-y: 0;
+}
+.camp-person[data-facing="left"] .runner-sprite {
   background-position-y: -144px;
+}
+.camp-person[data-facing="up"] .runner-sprite {
+  background-position-y: -48px;
 }
 
 .camp-person.recovering .runner-sprite,
@@ -64,20 +64,28 @@ body.game-paused .runner-sprite {
 }
 
 @keyframes soldier-walk-cycle {
-  0%, 24.99% {
+  0%, 16.65% {
     background-position-x: 0;
     transform: translateY(0);
   }
-  25%, 49.99% {
+  16.66%, 33.31% {
     background-position-x: -32px;
     transform: translateY(-1px);
   }
-  50%, 74.99% {
+  33.32%, 49.98% {
     background-position-x: -64px;
     transform: translateY(0);
   }
-  75%, 100% {
+  49.99%, 66.64% {
     background-position-x: -96px;
+    transform: translateY(-1px);
+  }
+  66.65%, 83.31% {
+    background-position-x: -128px;
+    transform: translateY(0);
+  }
+  83.32%, 100% {
+    background-position-x: -160px;
     transform: translateY(-1px);
   }
 }
@@ -90,7 +98,7 @@ body.game-paused .runner-sprite {
  */
 @media (prefers-reduced-motion: reduce) {
   .runner-sprite {
-    animation-duration: 560ms !important;
+    animation-duration: 720ms !important;
     animation-iteration-count: infinite !important;
   }
 }
