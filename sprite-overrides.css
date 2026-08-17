@@ -82,6 +82,19 @@ body.game-paused .runner-sprite {
   }
 }
 
+/*
+ * The legacy game stylesheet globally collapses animations when the operating
+ * system requests reduced motion. Camp routes are explicitly re-enabled there,
+ * but the sprite frame animation was not, so soldiers moved and changed facing
+ * while their legs stayed frozen on one frame.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .runner-sprite {
+    animation-duration: 560ms !important;
+    animation-iteration-count: infinite !important;
+  }
+}
+
 .camp-person.commander .runner-sprite {
   filter: brightness(1.08) saturate(.9) drop-shadow(0 0 2px rgba(245, 201, 104, .45)) !important;
 }
