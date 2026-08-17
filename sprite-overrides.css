@@ -3,7 +3,7 @@
   width: 54px !important;
   height: 78px !important;
   margin-top: 0 !important;
-  background: center / contain no-repeat url("/assets/soldier-card-v4.png") !important;
+  background: center / contain no-repeat url("/assets/soldier-card-v5.png") !important;
   image-rendering: pixelated !important;
   filter: drop-shadow(8px 9px 0 rgba(31, 23, 14, .28)) !important;
   transform: none !important;
@@ -25,7 +25,7 @@
   width: 32px !important;
   height: 48px !important;
   background-color: transparent !important;
-  background-image: url("/assets/soldier-walk-4dir-32x48-v4.png") !important;
+  background-image: url("/assets/soldier-walk-4dir-32x48-v5.png") !important;
   background-repeat: no-repeat !important;
   background-size: 128px 192px !important;
   background-position-x: 0;
