@@ -32,7 +32,8 @@
   background-position-y: 0;
   box-shadow: none !important;
   image-rendering: pixelated !important;
-  animation: soldier-walk-frames 480ms steps(4) infinite;
+  will-change: background-position, transform;
+  animation: soldier-walk-cycle 560ms linear infinite;
 }
 .runner-sprite::before,
 .runner-sprite::after,
@@ -62,9 +63,23 @@ body.game-paused .runner-sprite {
   animation-play-state: paused !important;
 }
 
-@keyframes soldier-walk-frames {
-  from { background-position-x: 0; }
-  to { background-position-x: -128px; }
+@keyframes soldier-walk-cycle {
+  0%, 24.99% {
+    background-position-x: 0;
+    transform: translateY(0);
+  }
+  25%, 49.99% {
+    background-position-x: -32px;
+    transform: translateY(-1px);
+  }
+  50%, 74.99% {
+    background-position-x: -64px;
+    transform: translateY(0);
+  }
+  75%, 100% {
+    background-position-x: -96px;
+    transform: translateY(-1px);
+  }
 }
 
 .camp-person.commander .runner-sprite {
