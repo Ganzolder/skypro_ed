@@ -13,7 +13,7 @@ const encoded = chunks.map((name) => fs.readFileSync(path.join(chunksDir, name),
 const compressed = Buffer.from(encoded, 'base64');
 let html = zlib.brotliDecompressSync(compressed).toString('utf8');
 
-const spriteLink = '<link rel="stylesheet" href="/sprite-overrides.css?v=4">';
+const spriteLink = '<link rel="stylesheet" href="/sprite-overrides.css?v=a98059f">';
 if (!html.includes(spriteLink)) {
   html = html.replace('</head>', `  ${spriteLink}\n</head>`);
 }
