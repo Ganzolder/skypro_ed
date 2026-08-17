@@ -24,14 +24,47 @@
   left: 1px !important;
   width: 32px !important;
   height: 48px !important;
-  background: center / contain no-repeat url("/assets/soldier-32x48.png") !important;
+  background-color: transparent !important;
+  background-image: url("/assets/soldier-walk-4dir-32x48-v2.png") !important;
+  background-repeat: no-repeat !important;
+  background-size: 128px 192px !important;
+  background-position-x: 0;
+  background-position-y: 0;
   box-shadow: none !important;
   image-rendering: pixelated !important;
+  animation: soldier-walk-frames 480ms steps(4) infinite;
 }
 .runner-sprite::before,
 .runner-sprite::after,
 .runner-sprite > b {
   display: none !important;
+}
+
+.camp-person[data-facing="down"] .runner-sprite {
+  background-position-y: 0;
+}
+.camp-person[data-facing="right"] .runner-sprite {
+  background-position-y: -48px;
+}
+.camp-person[data-facing="left"] .runner-sprite {
+  background-position-y: -96px;
+}
+.camp-person[data-facing="up"] .runner-sprite {
+  background-position-y: -144px;
+}
+
+.camp-person.recovering .runner-sprite,
+.camp-person.inPit .runner-sprite {
+  animation-play-state: paused;
+}
+
+body.game-paused .runner-sprite {
+  animation-play-state: paused !important;
+}
+
+@keyframes soldier-walk-frames {
+  from { background-position-x: 0; }
+  to { background-position-x: -128px; }
 }
 
 .camp-person.commander .runner-sprite {
