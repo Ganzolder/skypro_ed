@@ -29,6 +29,14 @@
   width: 112px !important;
   min-height: 112px !important;
   pointer-events: none;
+  transform: translate(-50%, -100%) !important;
+  transform-origin: center bottom !important;
+}
+
+/* Construction plots and completed sprites share the same ground anchor. */
+#campStage .construction-plot {
+  transform: translate(-50%, -100%) skewY(-5deg) !important;
+  transform-origin: center bottom !important;
 }
 
 #campStage .camp-building:not(.building-hq) .building-model {

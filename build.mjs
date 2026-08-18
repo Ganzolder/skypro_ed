@@ -27,12 +27,68 @@ if (!html.includes('campBuilding("morgue"')) {
   );
 }
 
+// The supplied camp background has fixed, illustrated construction pads. Keep a
+// single layout table for both completed buildings and their construction plots
+// so an upgrade replaces its plot in exactly the same place. Coordinates are
+// percentages of #campStage; non-HQ sprites use a bottom-centre ground anchor in
+// map-buildings.css.
+const campBuildingHook = '  function campBuilding(type, name, caption, x, y, z, level) {\n';
+if (!html.includes(campBuildingHook)) throw new Error('Camp building helper is missing');
+html = html.replace(
+  campBuildingHook,
+  `  const CAMP_MAP_LAYOUT = Object.freeze({
+    hq: { x: 49.5, y: 24, z: 9 },
+    "tent:К-1": { x: 19.5, y: 52, z: 12 },
+    "tent:К-2": { x: 25.5, y: 70.5, z: 16 },
+    "tent:К-3": { x: 72, y: 36, z: 9 },
+    hospital: { x: 77, y: 54, z: 14 },
+    warehouse: { x: 42.5, y: 83, z: 22 },
+    pit: { x: 44, y: 47, z: 11 },
+    checkpoint: { x: 31, y: 34, z: 8 },
+    signal: { x: 68, y: 81, z: 21 },
+    evac: { x: 56, y: 65, z: 16 },
+    guard: { x: 91, y: 55, z: 14 },
+    tower: { x: 11.5, y: 68, z: 17 },
+    morgue: { x: 86, y: 73, z: 20 },
+  });
+
+  const CAMP_CONSTRUCTION_LAYOUT = Object.freeze({
+    "Госпиталь": CAMP_MAP_LAYOUT.hospital,
+    "Склад": CAMP_MAP_LAYOUT.warehouse,
+    "Яма": CAMP_MAP_LAYOUT.pit,
+    "Узел связи": CAMP_MAP_LAYOUT.signal,
+    "Эвакогруппа": CAMP_MAP_LAYOUT.evac,
+    "Охрана": CAMP_MAP_LAYOUT.guard,
+  });
+
+${campBuildingHook}    const slotKey = type === "tent" ? \`tent:\${name}\` : type;
+    const slot = CAMP_MAP_LAYOUT[slotKey];
+    if (slot) {
+      x = slot.x;
+      y = slot.y;
+      z = slot.z;
+    }
+`,
+);
+
+const constructionPlotHook = '  function constructionPlot(label, x, y) {\n';
+if (!html.includes(constructionPlotHook)) throw new Error('Camp construction plot helper is missing');
+html = html.replace(
+  constructionPlotHook,
+  `${constructionPlotHook}    const slot = CAMP_CONSTRUCTION_LAYOUT[label];
+    if (slot) {
+      x = slot.x;
+      y = slot.y;
+    }
+`,
+);
+
 const spriteLink = '<link rel="stylesheet" href="/sprite-overrides.css?v=up-anchor-v7">';
 if (!html.includes(spriteLink)) {
   html = html.replace('</head>', `  ${spriteLink}\n</head>`);
 }
 
-const buildingLink = '<link rel="stylesheet" href="/map-buildings.css?v=camp-bg-v3">';
+const buildingLink = '<link rel="stylesheet" href="/map-buildings.css?v=camp-layout-v4">';
 if (!html.includes(buildingLink)) {
   html = html.replace('</head>', `  ${buildingLink}\n</head>`);
 }
