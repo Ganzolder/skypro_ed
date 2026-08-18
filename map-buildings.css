@@ -1,0 +1,49 @@
+/* User-supplied building art for the playable camp map only. */
+#campStage .camp-building:not(.building-hq) {
+  width: 112px !important;
+  min-height: 112px !important;
+  pointer-events: none;
+}
+
+#campStage .camp-building:not(.building-hq) .building-model {
+  position: relative !important;
+  inset: auto !important;
+  width: 112px !important;
+  height: 112px !important;
+  margin: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background-color: transparent !important;
+  background-image: url('/assets/map-buildings-v1.png') !important;
+  background-repeat: no-repeat !important;
+  background-size: 500% 200% !important;
+  box-shadow: none !important;
+  clip-path: none !important;
+  filter: drop-shadow(4px 6px 2px rgba(5, 8, 4, 0.32)) !important;
+  transform: none !important;
+}
+
+#campStage .camp-building:not(.building-hq) .building-shadow,
+#campStage .camp-building:not(.building-hq) .building-front,
+#campStage .camp-building:not(.building-hq) .building-side,
+#campStage .camp-building:not(.building-hq) .building-roof,
+#campStage .camp-building:not(.building-hq) .building-mark {
+  display: none !important;
+}
+
+/* 5 x 2 atlas: barracks, hospital, warehouse, pit, recruit / comms, evac, guard, tower, morgue. */
+#campStage .building-tent .building-model       { background-position:   0%   0% !important; }
+#campStage .building-hospital .building-model   { background-position:  25%   0% !important; }
+#campStage .building-warehouse .building-model  { background-position:  50%   0% !important; }
+#campStage .building-pit .building-model        { background-position:  75%   0% !important; }
+#campStage .building-checkpoint .building-model { background-position: 100%   0% !important; }
+#campStage .building-signal .building-model     { background-position:   0% 100% !important; }
+#campStage .building-evac .building-model       { background-position:  25% 100% !important; }
+#campStage .building-guard .building-model      { background-position:  50% 100% !important; }
+#campStage .building-tower .building-model      { background-position:  75% 100% !important; }
+#campStage .building-morgue .building-model     { background-position: 100% 100% !important; }
+
+/* Keep the legacy captions and map depth/coordinates intact. */
+#campStage .camp-building:not(.building-hq) .building-caption {
+  z-index: 2;
+}
