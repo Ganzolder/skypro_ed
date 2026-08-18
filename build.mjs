@@ -32,7 +32,7 @@ if (!html.includes(spriteLink)) {
   html = html.replace('</head>', `  ${spriteLink}\n</head>`);
 }
 
-const buildingLink = '<link rel="stylesheet" href="/map-buildings.css?v=map-art-v1">';
+const buildingLink = '<link rel="stylesheet" href="/map-buildings.css?v=map-art-v2">';
 if (!html.includes(buildingLink)) {
   html = html.replace('</head>', `  ${buildingLink}\n</head>`);
 }
@@ -42,7 +42,7 @@ if (!html.includes(spriteDirectionScript)) {
   html = html.replace('</body>', `  ${spriteDirectionScript}\n</body>`);
 }
 
-const buildingChunksDir = path.join(process.cwd(), 'src', 'map-buildings-atlas');
+const buildingChunksDir = path.join(process.cwd(), 'src', 'map-buildings-atlas-v2');
 const buildingChunks = fs.readdirSync(buildingChunksDir)
   .filter((name) => /^part-\d+\.b64$/.test(name))
   .sort();
@@ -53,7 +53,7 @@ const buildingEncoded = buildingChunks
   .join('');
 const buildingAtlas = Buffer.from(buildingEncoded, 'base64');
 const buildingAtlasHash = crypto.createHash('sha256').update(buildingAtlas).digest('hex');
-if (buildingAtlasHash !== 'dfaeac0794adb0d81f9f153140528240c9b2024d65617431346a2e43f8d2e985') {
+if (buildingAtlasHash !== 'd6ed34e86793705386cb557ccfac08fb0ebd8fbd06dad26ff6ed87f7caac793b') {
   throw new Error(`Map building atlas checksum mismatch: ${buildingAtlasHash}`);
 }
 
@@ -67,7 +67,7 @@ fs.copyFileSync('map-buildings.css', path.join('dist', 'map-buildings.css'));
 fs.copyFileSync(path.join('assets', 'soldier-card-v7.png'), path.join('dist', 'assets', 'soldier-card-v7.png'));
 fs.copyFileSync(path.join('assets', 'soldier-32x48.png'), path.join('dist', 'assets', 'soldier-32x48.png'));
 fs.copyFileSync(path.join('assets', 'soldier-walk-4dir-6f-32x48-v7.png'), path.join('dist', 'assets', 'soldier-walk-4dir-6f-32x48-v7.png'));
-fs.writeFileSync(path.join('dist', 'assets', 'map-buildings-v1.png'), buildingAtlas);
+fs.writeFileSync(path.join('dist', 'assets', 'map-buildings-v2.png'), buildingAtlas);
 
 console.log(
   `Built M23 v22 web: ${Buffer.byteLength(html)} bytes from ${chunks.length} chunks + directional soldier assets + supplied camp buildings`,
