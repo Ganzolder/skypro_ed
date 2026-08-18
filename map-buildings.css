@@ -1,7 +1,7 @@
 /* User-supplied background for the playable camp map only. */
 #campStage.camp-stage {
   background-color: #5b4931 !important;
-  background-image: url('/assets/camp-map-background.webp') !important;
+  background-image: url('/assets/camp-map-background-v2.webp') !important;
   background-repeat: no-repeat !important;
   background-position: center !important;
   background-size: 100% 100% !important;

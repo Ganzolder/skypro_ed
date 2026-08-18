@@ -44,10 +44,10 @@ html = html.replace(
     hospital: { x: 77, y: 54, z: 14 },
     warehouse: { x: 42.5, y: 83, z: 22 },
     pit: { x: 44, y: 47, z: 11 },
-    checkpoint: { x: 31, y: 34, z: 8 },
+    checkpoint: { x: 91, y: 55, z: 14 },
     signal: { x: 68, y: 81, z: 21 },
     evac: { x: 56, y: 65, z: 16 },
-    guard: { x: 91, y: 55, z: 14 },
+    guard: { x: 31, y: 34, z: 8 },
     tower: { x: 11.5, y: 68, z: 17 },
     morgue: { x: 86, y: 73, z: 20 },
   });
@@ -88,7 +88,7 @@ if (!html.includes(spriteLink)) {
   html = html.replace('</head>', `  ${spriteLink}\n</head>`);
 }
 
-const buildingLink = '<link rel="stylesheet" href="/map-buildings.css?v=camp-layout-v4">';
+const buildingLink = '<link rel="stylesheet" href="/map-buildings.css?v=camp-layout-v5">';
 if (!html.includes(buildingLink)) {
   html = html.replace('</head>', `  ${buildingLink}\n</head>`);
 }
@@ -123,7 +123,7 @@ fs.copyFileSync('map-buildings.css', path.join('dist', 'map-buildings.css'));
 fs.copyFileSync(path.join('assets', 'soldier-card-v7.png'), path.join('dist', 'assets', 'soldier-card-v7.png'));
 fs.copyFileSync(path.join('assets', 'soldier-32x48.png'), path.join('dist', 'assets', 'soldier-32x48.png'));
 fs.copyFileSync(path.join('assets', 'soldier-walk-4dir-6f-32x48-v7.png'), path.join('dist', 'assets', 'soldier-walk-4dir-6f-32x48-v7.png'));
-fs.copyFileSync(path.join('assets', 'camp-map-background.webp'), path.join('dist', 'assets', 'camp-map-background.webp'));
+fs.copyFileSync(path.join('assets', 'camp-map-background.webp'), path.join('dist', 'assets', 'camp-map-background-v2.webp'));
 fs.writeFileSync(path.join('dist', 'assets', 'map-buildings-v2.png'), buildingAtlas);
 
 console.log(
