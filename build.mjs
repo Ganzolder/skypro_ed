@@ -32,7 +32,7 @@ if (!html.includes(spriteLink)) {
   html = html.replace('</head>', `  ${spriteLink}\n</head>`);
 }
 
-const buildingLink = '<link rel="stylesheet" href="/map-buildings.css?v=map-art-v2">';
+const buildingLink = '<link rel="stylesheet" href="/map-buildings.css?v=camp-bg-v3">';
 if (!html.includes(buildingLink)) {
   html = html.replace('</head>', `  ${buildingLink}\n</head>`);
 }
@@ -67,8 +67,9 @@ fs.copyFileSync('map-buildings.css', path.join('dist', 'map-buildings.css'));
 fs.copyFileSync(path.join('assets', 'soldier-card-v7.png'), path.join('dist', 'assets', 'soldier-card-v7.png'));
 fs.copyFileSync(path.join('assets', 'soldier-32x48.png'), path.join('dist', 'assets', 'soldier-32x48.png'));
 fs.copyFileSync(path.join('assets', 'soldier-walk-4dir-6f-32x48-v7.png'), path.join('dist', 'assets', 'soldier-walk-4dir-6f-32x48-v7.png'));
+fs.copyFileSync(path.join('assets', 'camp-map-background.webp'), path.join('dist', 'assets', 'camp-map-background.webp'));
 fs.writeFileSync(path.join('dist', 'assets', 'map-buildings-v2.png'), buildingAtlas);
 
 console.log(
-  `Built M23 v22 web: ${Buffer.byteLength(html)} bytes from ${chunks.length} chunks + directional soldier assets + supplied camp buildings`,
+  `Built M23 v22 web: ${Buffer.byteLength(html)} bytes from ${chunks.length} chunks + directional soldier assets + supplied camp map and buildings`,
 );
