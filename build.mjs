@@ -32,4 +32,25 @@ fs.copyFileSync('sprite-directions.js', path.join('dist', 'sprite-directions.js'
 fs.copyFileSync(path.join('assets', 'soldier-card-v7.png'), path.join('dist', 'assets', 'soldier-card-v7.png'));
 fs.copyFileSync(path.join('assets', 'soldier-32x48.png'), path.join('dist', 'assets', 'soldier-32x48.png'));
 fs.copyFileSync(path.join('assets', 'soldier-walk-4dir-6f-32x48-v7.png'), path.join('dist', 'assets', 'soldier-walk-4dir-6f-32x48-v7.png'));
+
+const needles = [
+  'view-camp', 'Казарма', 'Госпиталь', 'Склад', 'Яма', 'Вербов', 'Узел связи', 'Эвако', 'Охрана', 'Вышка', 'Морг',
+  'barracks', 'hospital', 'warehouse', 'pit', 'recruit', 'comms', 'evac', 'guard', 'tower', 'morgue',
+  'buildings', 'building', 'facilities', 'facility', 'campMap', 'camp-map', 'map-camp', 'scene'
+];
+const rows = [];
+for (const needle of needles) {
+  let from = 0;
+  let count = 0;
+  while (count < 12) {
+    const idx = html.toLowerCase().indexOf(needle.toLowerCase(), from);
+    if (idx < 0) break;
+    const a = Math.max(0, idx - 900);
+    const b = Math.min(html.length, idx + needle.length + 1400);
+    rows.push(`\n===== ${needle} @ ${idx} =====\n${html.slice(a, b)}\n`);
+    from = idx + needle.length;
+    count += 1;
+  }
+}
+fs.writeFileSync(path.join('dist', 'diagnostic-map.txt'), rows.join('\n'));
 console.log(`Built M23 v22 web: ${Buffer.byteLength(html)} bytes from ${chunks.length} chunks + directional soldier assets`);
