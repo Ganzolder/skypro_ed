@@ -124,13 +124,20 @@ fs.copyFileSync(path.join('assets', 'soldier-card-v7.png'), path.join('dist', 'a
 fs.copyFileSync(path.join('assets', 'soldier-32x48.png'), path.join('dist', 'assets', 'soldier-32x48.png'));
 fs.copyFileSync(path.join('assets', 'soldier-walk-4dir-6f-32x48-v7.png'), path.join('dist', 'assets', 'soldier-walk-4dir-6f-32x48-v7.png'));
 fs.copyFileSync(path.join('assets', 'camp-map-background.webp'), path.join('dist', 'assets', 'camp-map-background-v2.webp'));
-const hqChunksDir = path.join(process.cwd(), 'src', 'hq-tent-v1');
-const hqChunks = fs.readdirSync(hqChunksDir)
-  .filter((name) => /^part-\d+\.b64$/.test(name))
-  .sort();
-if (!hqChunks.length) throw new Error('HQ tent sprite chunks are missing');
-const hqEncoded = hqChunks
-  .map((name) => fs.readFileSync(path.join(hqChunksDir, name), 'utf8').trim())
+const hqChunkPaths = [
+  ...['0', '1', '2', '3'].map((n) => path.join('src', 'hq-tent-repair-v1', `part-00-${n}.b64`)),
+  path.join('src', 'hq-tent-v1', 'part-01.b64'),
+  path.join('src', 'hq-tent-v1', 'part-02.b64'),
+  ...['0', '1', '2', '3'].map((n) => path.join('src', 'hq-tent-repair-v1', `part-03-${n}.b64`)),
+  ...['0', '1', '2', '3'].map((n) => path.join('src', 'hq-tent-repair-v1', `part-04-${n}.b64`)),
+  path.join('src', 'hq-tent-v1', 'part-05.b64'),
+  path.join('src', 'hq-tent-v1', 'part-06.b64'),
+];
+if (hqChunkPaths.some((chunkPath) => !fs.existsSync(chunkPath))) {
+  throw new Error('HQ tent sprite chunks are missing');
+}
+const hqEncoded = hqChunkPaths
+  .map((chunkPath) => fs.readFileSync(chunkPath, 'utf8').trim())
   .join('');
 const hqTent = Buffer.from(hqEncoded, 'base64');
 const hqTentHash = crypto.createHash('sha256').update(hqTent).digest('hex');
