@@ -77,7 +77,31 @@
 #campStage .building-tower .building-model      { background-position:  75% 100% !important; }
 #campStage .building-morgue .building-model     { background-position: 100% 100% !important; }
 
+/* Replace the legacy CSS-built HQ with the supplied HQ tent sprite while keeping its map anchor. */
+#campStage .building-hq .building-model {
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent url('/assets/hq-tent.png') center bottom / contain no-repeat !important;
+  box-shadow: none !important;
+  clip-path: none !important;
+  filter: drop-shadow(4px 7px 2px rgba(5, 8, 4, 0.34)) !important;
+  transform: scale(1.9) !important;
+  transform-origin: center bottom !important;
+}
+
+#campStage .building-hq .building-model::before,
+#campStage .building-hq .building-model::after,
+#campStage .building-hq .building-shadow,
+#campStage .building-hq .building-front,
+#campStage .building-hq .building-side,
+#campStage .building-hq .building-roof,
+#campStage .building-hq .building-mark {
+  display: none !important;
+  content: none !important;
+}
+
 /* Keep the legacy captions and map depth/coordinates intact. */
-#campStage .camp-building:not(.building-hq) .building-caption {
+#campStage .camp-building .building-caption {
+  position: relative;
   z-index: 2;
 }
