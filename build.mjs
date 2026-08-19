@@ -88,7 +88,7 @@ if (!html.includes(spriteLink)) {
   html = html.replace('</head>', `  ${spriteLink}\n</head>`);
 }
 
-const buildingLink = '<link rel="stylesheet" href="/map-buildings.css?v=camp-layout-v5">';
+const buildingLink = '<link rel="stylesheet" href="/map-buildings.css?v=hq-tent-v1">';
 if (!html.includes(buildingLink)) {
   html = html.replace('</head>', `  ${buildingLink}\n</head>`);
 }
@@ -124,6 +124,20 @@ fs.copyFileSync(path.join('assets', 'soldier-card-v7.png'), path.join('dist', 'a
 fs.copyFileSync(path.join('assets', 'soldier-32x48.png'), path.join('dist', 'assets', 'soldier-32x48.png'));
 fs.copyFileSync(path.join('assets', 'soldier-walk-4dir-6f-32x48-v7.png'), path.join('dist', 'assets', 'soldier-walk-4dir-6f-32x48-v7.png'));
 fs.copyFileSync(path.join('assets', 'camp-map-background.webp'), path.join('dist', 'assets', 'camp-map-background-v2.webp'));
+const hqChunksDir = path.join(process.cwd(), 'src', 'hq-tent-v1');
+const hqChunks = fs.readdirSync(hqChunksDir)
+  .filter((name) => /^part-\d+\.b64$/.test(name))
+  .sort();
+if (!hqChunks.length) throw new Error('HQ tent sprite chunks are missing');
+const hqEncoded = hqChunks
+  .map((name) => fs.readFileSync(path.join(hqChunksDir, name), 'utf8').trim())
+  .join('');
+const hqTent = Buffer.from(hqEncoded, 'base64');
+const hqTentHash = crypto.createHash('sha256').update(hqTent).digest('hex');
+if (hqTentHash !== '8d43531dffbcdf314ee97d2a8aeec0a003afa3e04b646720fc1131af1320c143') {
+  throw new Error(`HQ tent sprite checksum mismatch: ${hqTentHash}`);
+}
+fs.writeFileSync(path.join('dist', 'assets', 'hq-tent.png'), hqTent);
 fs.writeFileSync(path.join('dist', 'assets', 'map-buildings-v2.png'), buildingAtlas);
 
 console.log(
