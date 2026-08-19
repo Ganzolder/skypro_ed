@@ -2,6 +2,6 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": true,
   "trailingSlash": false,
-  "buildCommand": "node build.mjs",
+  "buildCommand": "node build.mjs && node copy-hit-assets.mjs",
   "outputDirectory": "dist"
 }
