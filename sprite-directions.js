@@ -58,26 +58,11 @@
 (() => {
   "use strict";
 
-  const HIT_SHEET = "/assets/soldier-hit-5f-32x48-v1.png?v=1";
+  const HIT_SHEET = "/assets/card-impact-user-6f-v1.png?v=1";
   const HIT_SFX = "/assets/hit-soft-v1.wav?v=1";
-  const FRAME_POSITIONS = ["0%", "25%", "50%", "75%", "100%"];
-  const FRAME_TIMES = [0, 42, 82, 132, 188];
-  const FRAME_TRANSFORMS = [
-    "translate(0, 0)",
-    "translate(1px, 0)",
-    "translate(2px, 1px)",
-    "translate(1px, 0)",
-    "translate(0, 0)"
-  ];
-  const RESTORE_AT = 230;
-  const HIT_PROPS = [
-    "background-image",
-    "background-size",
-    "background-position",
-    "background-repeat",
-    "transform",
-    "filter"
-  ];
+  const FRAME_COUNT = 6;
+  const FRAME_MS = 42;
+  const FINISH_DELAY = FRAME_COUNT * FRAME_MS + 18;
   const hitStates = new WeakMap();
 
   const audioPool = Array.from({ length: 4 }, () => {
@@ -98,26 +83,6 @@
     } catch {}
   }
 
-  function saveInline(element, property) {
-    return {
-      value: element.style.getPropertyValue(property),
-      priority: element.style.getPropertyPriority(property)
-    };
-  }
-
-  function restoreInline(element, property, saved) {
-    if (saved.value) element.style.setProperty(property, saved.value, saved.priority);
-    else element.style.removeProperty(property);
-  }
-
-  function finishHit(soldier) {
-    const state = hitStates.get(soldier);
-    if (!state) return;
-    state.timers.forEach(clearTimeout);
-    HIT_PROPS.forEach((property) => restoreInline(soldier, property, state.saved[property]));
-    hitStates.delete(soldier);
-  }
-
   function findCardSoldier(target) {
     let node = target instanceof Element ? target : null;
     for (let depth = 0; node && node !== document.body && depth < 7; depth += 1, node = node.parentElement) {
@@ -128,36 +93,48 @@
     return null;
   }
 
+  function ensureOverlay(soldier) {
+    let overlay = soldier.querySelector(":scope > .card-hit-overlay");
+    if (overlay) return overlay;
+
+    overlay = document.createElement("div");
+    overlay.className = "card-hit-overlay";
+    overlay.setAttribute("aria-hidden", "true");
+    soldier.appendChild(overlay);
+    return overlay;
+  }
+
+  function finishHit(soldier) {
+    const state = hitStates.get(soldier);
+    if (!state) return;
+    state.timers.forEach(clearTimeout);
+    state.overlay.classList.remove("is-playing");
+    state.overlay.style.backgroundPosition = "0% 0%";
+    hitStates.delete(soldier);
+  }
+
   function triggerCardHit(soldier) {
     if (!soldier) return;
     finishHit(soldier);
 
-    const saved = {};
-    HIT_PROPS.forEach((property) => {
-      saved[property] = saveInline(soldier, property);
-    });
+    const overlay = ensureOverlay(soldier);
+    overlay.style.backgroundImage = `url("${HIT_SHEET}")`;
+    overlay.style.backgroundSize = `${FRAME_COUNT * 100}% 100%`;
+    overlay.style.backgroundPosition = "0% 0%";
+    overlay.classList.add("is-playing");
 
-    const state = { saved, timers: [] };
+    const state = { overlay, timers: [] };
     hitStates.set(soldier, state);
 
-    FRAME_TIMES.forEach((delay, index) => {
+    for (let index = 0; index < FRAME_COUNT; index += 1) {
+      const delay = index * FRAME_MS;
       state.timers.push(setTimeout(() => {
-        soldier.style.setProperty("background-image", `url("${HIT_SHEET}")`, "important");
-        soldier.style.setProperty("background-size", "500% 100%", "important");
-        soldier.style.setProperty("background-position", `${FRAME_POSITIONS[index]} 0%`, "important");
-        soldier.style.setProperty("background-repeat", "no-repeat", "important");
-        soldier.style.setProperty("transform", FRAME_TRANSFORMS[index], "important");
-        soldier.style.setProperty(
-          "filter",
-          index === 2
-            ? "contrast(1.12) saturate(1.04) brightness(1.08) drop-shadow(8px 9px 0 rgba(31, 23, 14, .28))"
-            : "drop-shadow(8px 9px 0 rgba(31, 23, 14, .28))",
-          "important"
-        );
+        const position = FRAME_COUNT === 1 ? 0 : (index / (FRAME_COUNT - 1)) * 100;
+        overlay.style.backgroundPosition = `${position}% 0%`;
       }, delay));
-    });
+    }
 
-    state.timers.push(setTimeout(() => finishHit(soldier), RESTORE_AT));
+    state.timers.push(setTimeout(() => finishHit(soldier), FINISH_DELAY));
     playHitSound();
 
     if (typeof navigator.vibrate === "function") {

@@ -1,5 +1,7 @@
 /* M23 soldier visual override — uploaded pixel soldier */
 .pixel-soldier {
+  position: relative !important;
+  overflow: visible !important;
   width: 54px !important;
   height: 78px !important;
   margin-top: 0 !important;
@@ -12,6 +14,26 @@
 .pixel-soldier::after,
 .pixel-soldier > i {
   display: none !important;
+}
+
+.card-hit-overlay {
+  position: absolute !important;
+  left: 50% !important;
+  top: 50% !important;
+  width: 84px !important;
+  height: 168px !important;
+  transform: translate(-50%, -50%) !important;
+  z-index: 20 !important;
+  pointer-events: none !important;
+  opacity: 0 !important;
+  background-repeat: no-repeat !important;
+  background-color: transparent !important;
+  image-rendering: pixelated !important;
+  filter: none !important;
+  will-change: background-position, opacity;
+}
+.card-hit-overlay.is-playing {
+  opacity: 1 !important;
 }
 
 .camp-person {

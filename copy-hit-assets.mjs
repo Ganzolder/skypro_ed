@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const assets = [
-  'soldier-hit-5f-32x48-v1.png',
+  'card-impact-user-6f-v1.png',
   'hit-soft-v1.wav',
 ];
 
